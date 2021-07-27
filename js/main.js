@@ -3,7 +3,7 @@
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
   }
-// funzione che mi permette di verificare che i numeri non siano già stati usati.
+// funzione che mi permette di verificare che i numeri non siano già stati usati all' interno di un array.
 function contains(a, obj) {
     for (var i = 0; i < a.length; i++) {
         if (a[i] === obj) {
@@ -31,13 +31,11 @@ while (y < nbr_bomber) {
     y++;
     }
 }
-// array che contiene la "posizione" ramdom e non ripetuta delle 16 bombe
-console.log(arr_bomber);
-
 // In seguito deve chiedere all’utente (100 - 16) volte di inserire un numero alla volta, sempre compreso tra 1 e 100.
 var nbr_play = difficult - nbr_bomber;
 var arr_player = [];
 var z = 0;
+
 while (z <= nbr_play) {
 
     var nbr_player = parseInt(prompt('Inserisci un numero da 1 a 100'));
@@ -48,36 +46,37 @@ while (z <= nbr_play) {
         if (check_pos_player == false) {
             arr_player.push(nbr_player);
             z++;
-        } else if (check_pos_player == true)
-        alert('Numero già inserito! riprova!');
+        } else
+        alert('Numero già inserito! Inserisci un altro numero!');
 
         var check_play_player = contains(arr_bomber, nbr_player);
         // Se il numero è presente nella lista dei numeri generati, la partita termina, altrimenti si continua chiedendo all’utente un altro numero.
-        if(check_play_player == false && check_pos_player == false) {
+        // La partita termina quando raggiunge il numero massimo possibile di numeri consentiti.
+        if (arr_player.length == nbr_play) {
+            alert('Hai evitato tutte le bombe! Hai vinto');
+            break;
+        } else if(check_play_player == false && check_pos_player == false) {
         alert('Nessuna bomba trovata! Continua a giocare!');  
         // La partita termina quando viene inserito dal player un numero presente all'interno dell' array bombe. 
         } else if (check_play_player == true) {
         alert('Hai preso una bomba! Partita persa!') 
         break;
-        // La partita termina quando raggiunge il numero massimo possibile di numeri consentiti.
-        } else if (arr_player.length == nbr_play) {
-        alert('Hai evitato tutte le bombe! Hai vinto');
-        break;
         } 
     // La partita termina quando il giocatore inserisce un numero “vietato”     
     } else {
-        alert("Il numero inserito non è corretto!");
+        alert("Il numero inserito non è corretto! Ricomincia");
         break;
     }
 }       
 
-document.getElementById("array_bombe").innerHTML = "le bombe sono in posizione " + arr_bomber;
-document.getElementById("array_giocatore").innerHTML = "i numeri scelti dal player sono " + arr_player;
-document.getElementById("numero_giocate").innerHTML = "il numero di giocare del player sono " + z;
-console.log(arr_player)
-
 
 // Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha inserito un numero consentito.
+document.getElementById("array_bombe").innerHTML = "le bombe sono in posizione " + arr_bomber;
+document.getElementById("array_giocatore").innerHTML = "i numeri scelti dal player sono " + arr_player;
+document.getElementById("numero_giocate").innerHTML = "il numero di giocate del player sono " + z;
+
+
+
 
 
 
